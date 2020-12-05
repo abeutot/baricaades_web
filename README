@@ -1,0 +1,11 @@
+Run in dev::
+    yarn install
+    yarn dev
+
+Build::
+    yarn install
+    yarn build
+
+Run in production::
+    yarn install
+    yarn start
