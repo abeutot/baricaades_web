@@ -1,5 +1,6 @@
 {
     "name": "baricaades",
+    "license": "MIT",
     "scripts": {
         "dev": "nuxt",
         "build": "nuxt build",
