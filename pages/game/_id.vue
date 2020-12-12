@@ -420,6 +420,7 @@ export default {
         if (this.game.players[currentPlayer] === this.username) {
           if (this.game.dice === 0) {
             this.currentStep = 0
+            this.playNotificationSound()
           } else {
             this.currentStep = 2
           }
@@ -447,6 +448,14 @@ export default {
         }
 
         throw err
+      }
+    },
+    playNotificationSound() {
+      /* TODO see if we can play on reload */
+      if (process.client) {
+        console.log('play audio')
+        const audio = new Audio('/notify.mp3')
+        audio.play()
       }
     },
     handleClick(position) {
