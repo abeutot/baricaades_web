@@ -1,9 +1,6 @@
 <template>
 <div>
   <div class="panel_left" v-if="game !== null">
-    <p>
-      {{ game.state }}
-    </p>
     <p v-if="game.state === 'WAITING_FOR_PLAYERS' && username === game.players[0]">
       <button @click="startGame()">Start the game!</button>
     </p>
