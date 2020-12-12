@@ -1,5 +1,31 @@
 <template>
 <div>
+  <div class="panel_left" v-if="game !== null">
+    <p>
+      {{ game.state }}
+    </p>
+    <p v-if="game.state === 'WAITING_FOR_PLAYERS' && username === game.players[0]">
+      <button @click="startGame()">Start the game!</button>
+    </p>
+    <p>
+      Dice:
+      <template v-if="game.dice !== 0">{{ game.dice }}</template>
+      <template v-else>???</template>
+      <template v-if="currentStep == 0">
+      <button @click="rollTheDice()">Roll</button>
+      </template>
+    </p>
+    <p>
+      {{ steps[currentStep] }}
+    </p>
+    <p v-if="error !== null" class="error">
+      {{ error }}
+    </p>
+  </div>
+  <div v-else>
+    You are not part of this game. Would you like to join?
+    <button @click="joinGame()">Yes</button>
+  </div>
   <table v-if="game !== null">
     <tr>
       <th></th>
@@ -284,32 +310,6 @@
       <td colspan="2"></td>
     </tr>
   </table>
-  <div v-if="game !== null">
-    <p v-if="game.state === 'WAITING_FOR_PLAYERS' && username === game.players[0]">
-      <button @click="startGame()">Start the game!</button>
-    </p>
-    <p>
-      {{ game.state }}
-    </p>
-    <p>
-      Dice:
-      <template v-if="game.dice !== 0">{{ game.dice }}</template>
-      <template v-else>???</template>
-      <template v-if="currentStep == 0">
-      <button @click="rollTheDice()">Roll</button>
-      </template>
-    </p>
-    <p>
-      {{ steps[currentStep] }}
-    </p>
-    <p v-if="error !== null" class="error">
-      {{ error }}
-    </p>
-  </div>
-  <div v-else>
-    You are not part of this game. Would you like to join?
-    <button @click="joinGame()">Yes</button>
-  </div>
 </div>
 </template>
 
@@ -571,5 +571,9 @@ td.currentPlayer {
 }
 table {
   max-width: 950px;
+  margin: 0 auto;
+}
+div.panel_left {
+  float: left;
 }
 </style>
