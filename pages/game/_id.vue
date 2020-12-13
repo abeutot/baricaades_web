@@ -18,6 +18,10 @@
     <p v-if="error !== null" class="error">
       {{ error }}
     </p>
+    <p>
+      <input type="checkbox" id="checkbox_sound_enabled" v-model="soundNotification" />
+      <label for="checkbox_sound_enabled">Enable sound notifications</label>
+    </p>
   </div>
   <div v-else>
     You are not part of this game. Would you like to join?
@@ -347,6 +351,7 @@ export default {
         'Game is finished, congrats to the winner!',
       ],
       move: { ...initMove },
+      soundNotification: true, /* TODO use a store with local storage support */
     }
   },
   async fetch() {
@@ -452,8 +457,7 @@ export default {
     },
     playNotificationSound() {
       /* TODO see if we can play on reload */
-      if (process.client) {
-        console.log('play audio')
+      if (process.client && this.soundNotification === true) {
         const audio = new Audio('/notify.mp3')
         audio.play()
       }
