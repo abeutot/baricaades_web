@@ -13,7 +13,10 @@
       </template>
     </p>
     <p>
-      {{ steps[currentStep] }}
+      <template v-if="steps[currentStep] === 'WAITING_MOVE'">
+        Waiting for {{ game.players[currentPlayer] }}'s move...
+      </template>
+      <template v-else>{{ steps[currentStep] }}</template>
     </p>
     <p v-if="error !== null" class="error">
       {{ error }}
@@ -305,7 +308,7 @@
     <tr>
       <td colspan="2"></td>
       <template v-for="p in game.players">
-      <td colspan="3" :class="{ currentPlayer: p === username }">{{ p }}</td>
+      <td colspan="3" :class="{ currentPlayer: p === game.players[currentPlayer] }">{{ p }}</td>
       <td></td>
       </template>
       <td colspan="2"></td>
@@ -337,6 +340,7 @@ export default {
   data() {
     return {
       game: null,
+      currentPlayer: -1,
       currentStep: 6,
       error: null,
       steps: [
@@ -346,7 +350,7 @@ export default {
         'Select a slot to place your pawn',
         'Select a slot to place the baricade',
         'Processing the move...',
-        'It is the other player\'s turn',
+        'WAITING_MOVE',
         'Waiting for other players to join...',
         'Game is finished, congrats to the winner!',
       ],
@@ -395,20 +399,20 @@ export default {
     updateState(game) {
       this.game = game
 
-      let currentPlayer = -1
+      this.currentPlayer = -1
 
       switch (this.game.state) {
         case 'RED_PLAYING':
-          currentPlayer = 0
+          this.currentPlayer = 0
           break
         case 'GREEN_PLAYING':
-          currentPlayer = 1
+          this.currentPlayer = 1
           break
         case 'YELLOW_PLAYING':
-          currentPlayer = 2
+          this.currentPlayer = 2
           break
         case 'BLUE_PLAYING':
-          currentPlayer = 3
+          this.currentPlayer = 3
           break
         case 'WAITING_FOR_PLAYERS':
           this.currentStep = 7
@@ -421,8 +425,8 @@ export default {
           return
       }
 
-      if (currentPlayer !== -1) {
-        if (this.game.players[currentPlayer] === this.username) {
+      if (this.currentPlayer !== -1) {
+        if (this.game.players[this.currentPlayer] === this.username) {
           if (this.game.dice === 0) {
             this.currentStep = 0
             this.playNotificationSound()
