@@ -4,6 +4,8 @@
     Hello {{ username }}!
     </h2>
 
+    <GameList title="Your games" :games="myGames" />
+    <GameList title="Open games" :games="openGames" :showState="false" />
     <p>
       <a href="javascript:void(0);" @click="createGame">Create a new game</a>
     </p>
@@ -14,12 +16,29 @@
 </template>
 
 <script>
+import GameList from '~/components/GameList.vue'
+
 export default {
+  components: {
+    GameList,
+  },
   middleware: 'auth',
+  data() {
+    return {
+      myGames: [],
+      openGames: [],
+    }
+  },
   computed: {
     username() {
       return this.$store.state.auth.username
     },
+  },
+  async fetch() {
+    const resp = await this.$axios.$get('/game')
+
+    this.myGames = resp.mine
+    this.openGames = resp.open
   },
   methods: {
     async createGame() {
