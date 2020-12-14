@@ -586,4 +586,8 @@ table {
 div.panel_left {
   float: left;
 }
+td.slotArrival:hover, td.slot:hover, td.slotBaricade:hover, td.slotRed:hover,
+td.slotGreen:hover, td.slotYellow:hover, td.slotBlue:hover {
+  box-shadow: 0 0 1em red;
+}
 </style>
