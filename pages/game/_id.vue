@@ -348,7 +348,7 @@ export default {
         'Rolling the dice...',
         'Select a pawn to move',
         'Select a slot to place your pawn',
-        'Select a slot to place the baricade',
+        'Select a slot to place the barricade',
         'Processing the move...',
         'WAITING_MOVE',
         'Waiting for other players to join...',
