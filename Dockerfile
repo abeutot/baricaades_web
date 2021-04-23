@@ -21,6 +21,7 @@ ENV NUXT_HOST=0.0.0.0
 WORKDIR /root/
 
 COPY --from=0 .nuxt/ /root/.nuxt
+COPY --from=0 static/ /root/static
 COPY --from=0 package.json yarn.lock nuxt.config.js /root/
 
 RUN yarn install --production
