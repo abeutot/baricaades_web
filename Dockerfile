@@ -23,6 +23,6 @@ WORKDIR /root/
 COPY --from=0 .nuxt/ /root/.nuxt
 COPY --from=0 package.json yarn.lock nuxt.config.js /root/
 
-RUN yarn install
+RUN yarn install --production
 
 CMD ["yarn", "start"]
